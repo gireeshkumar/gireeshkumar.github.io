@@ -1,0 +1,111 @@
+.contentHeader
+{
+    background: url("../images/work-space.png") no-repeat scroll 0 0 transparent;
+    color: #305768;
+    float: left;
+    height: 62px;
+    line-height: 82px;
+    margin-bottom: 25px;
+    margin-left: 130px;
+    margin-top: 100px;
+    width: 890px;
+}
+.ch1{
+    color: #FFFFFF;
+    font-size: 42px;
+    margin-left: 49px;
+}
+.ch2{
+	color: #00AEFF;
+	font-size: 19px;
+	margin-left: 74px;
+
+}
+.ch3{
+	float: right;
+	font-size: 13px;
+	margin-top: 26px;
+	color: #9FA2A4;
+}
+.addNewImage{
+	background: url("../images/icon_add.png") no-repeat scroll 0 0 transparent;
+    float: left;
+    height: 23px;
+    margin-left: 11px;
+    width: 25px;
+}
+.ch3 a {
+	float: left;
+    padding-left: 5px;
+    padding-top: 3px;
+    text-decoration: underline;
+}
+.contentTable{
+	border-spacing: 0;
+	border: 0px solid #28B6F7;
+	float: left;
+	width: 383px;
+}
+.tableHead{
+	background: none repeat scroll 0 0 #2F5568;
+	color:#ffffff;	
+}
+.tableHead th{ 	
+	padding-bottom: 5px;
+    padding-left: 10px;
+    padding-top: 5px;
+    text-align: left;
+    width: 133px;
+}
+.tableHead .h1{
+	width:310px;
+}
+.tableHead .h2{
+	width:310px;
+}
+.tableHead .h3{
+	width:310px;
+}
+.tableHead .h4{
+	width:310px;
+}
+.tableBody td{ 	
+	color: #333333;
+    font-size: 13px;
+    padding-bottom: 5px;
+    padding-left: 7px;
+    padding-top: 5px;
+	position:relative;
+}
+
+.input{
+	background: none repeat scroll 0 0 #76d1fe;
+}
+.input input{
+	width: 95px;
+}
+.dnsContent{
+	margin-top: 10px;
+	padding:10px;
+}
+.dnsTable{
+	margin-top:10px;
+	margin-left:128px;
+}
+.rightTable{
+	margin-top:10px;
+	margin-left:-4px;
+}
+.td1{
+width:200px;
+padding:3px;
+}
+
+.td2{
+width:200px
+}
+.td3{
+width:200px;
+margin-left:100px;
+ padding: 0 14px 0 214px;
+}

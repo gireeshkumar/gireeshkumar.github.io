@@ -1,0 +1,235 @@
+body {
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+@font-face {
+  font-family: inspira;
+  src: url("../fonts/GEInspiraPitch.eot");
+  src: url("../fonts/GEInspiraPitch.eot?#iefix") format("embedded-opentype"), url("../fonts/GEInspiraPitch.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: inspiraB;
+  src: url("../fonts/GEInspiraPitchBold.eot");
+  /* IE9*/
+  src: url("../fonts/GEInspiraPitchBold.eot?#iefix") format("embedded-opentype"), url("../fonts/GEInspiraPitchBold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal; }
+
+body {
+  min-height: 100%;
+  font: 13px inspiraB, Arial, sans-serif !important; 
+  color: #062951;
+  }
+  
+ .loadingmodal {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) 
+                url('../images/loading.gif') 
+                50% 50% 
+                no-repeat;
+}
+
+.routeloading {
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) 
+                url('../images/loading.gif') 
+                50% 50% 
+                no-repeat;
+}
+
+#disclaimer {
+	display:none;
+}
+
+.ui-dialog {
+	width:500px;
+	height:500px;
+	opacity: 0.85;
+    filter: alpha(opacity = 50);
+}
+
+.ui-dialog .ui-dialog-buttonpane {
+	border-width: 0px 0 0 0;
+}
+
+.ui-dialog .ui-dialog-titlebar {
+	color:#000;
+	background:rgb(207, 209, 214);
+}
+
+.ui-dialog .ui-dialog-buttonpane {
+	border-width: 0!important;
+}
+
+.ui-dialog-titlebar-close{
+	display:none;
+}
+
+/* When the body has the loading class, we turn
+   the scrollbar off with overflow:hidden */
+body.loading {
+    overflow: hidden;   
+}
+
+/* Anytime the body has the loading class, our
+   modal element will be visible */
+body.loading .loadingmodal {
+    display: block;
+}
+
+#main-container {
+  height: 100%; }
+
+#contentArea {
+  height: 100%; }
+  #contentArea #login {
+    height: 100%;
+    background: -webkit-gradient(radial, 70% 50%, 210, 70% 50%, 560, from(#adcce1), to(#5d8fb2)); }
+    #contentArea #login #content-left {
+      height: 100%;
+      background: url("../images/login_bg.png") no-repeat transparent;
+      background-size: 100%; }
+    #contentArea #login #content-right {
+      height: 100%; }
+      #contentArea #login #content-right #main-content {
+        height: 100%;
+        position: relative; }
+        #contentArea #login #content-right #main-content #gelogo {
+          position: absolute;
+          bottom: 38px; }
+      #contentArea #login #content-right #top-icons {
+        margin-top: 10px;
+        margin-right: 18px;
+        height: 50px; }
+		#contentArea #login #content-right #top-icons .ge-logo {
+			margin-top:0px !important;
+		}
+        #contentArea #login #content-right #top-icons img {
+			margin-top: 12px;
+		}
+        #contentArea #login #content-right #top-icons .icon {
+          height: 100%; }
+		#contentArea #login #content-right #top-icons .margin-left-26 {
+			margin-left: 26px;
+		}
+        #contentArea #login #content-right #top-icons .text {
+          font-family: inspira !important;
+          font-size: 14px !important;
+          color: #FFF;
+          position: relative;
+          top: 33px; }
+        #contentArea #login #content-right #top-icons .header-text {
+          /*padding-top: 10px;*/
+          font-family: inspira !important;
+          font-size: 30px !important;
+          color: #FFF; }
+      #contentArea #login #content-right #page-title-box {
+        height: 22%;
+        position: relative; }
+        #contentArea #login #content-right #page-title-box #title {
+          font-family: inspira !important;
+          font-size: 48px !important;
+          color: #FFF;
+          position: absolute;
+          /*bottom: 18px;*/
+			top: 50%;
+			margin-top: -29px;
+		  }
+        #contentArea #login #content-right #page-title-box #slogan {
+          font-family: inspira !important;
+          font-size: 15px !important;
+          color: #FFF;
+          position: absolute;
+          bottom: 10px; }
+      #contentArea #login #content-right #login-row {
+        height: 40%;
+        margin-top: 10%; }
+        #contentArea #login #content-right #login-row #login-box {
+          /*height: 60%;
+          min-height: 200px;
+          /*min-width: 305px; */
+		  width: 373px;
+		  height: 181px; /*216px;*/
+		  font-family: inspira !important;
+		  }
+          #contentArea #login #content-right #login-row #login-box .row {
+            margin-left: 0px; }
+          #contentArea #login #content-right #login-row #login-box #login-header {
+            height: 38px;
+            background-color: #528ab1; }
+            #contentArea #login #content-right #login-row #login-box #login-header #title {
+              font-family: inspira !important;
+              font-size: 20px !important;
+              color: #FFF;
+              margin-left: 28px; 
+				height:34px;
+				padding-top: 4px;
+			  }
+          #contentArea #login #content-right #login-row #login-box #login-body {
+            height: 100%;
+            background-color: #c6e0f1;
+            border-right: 1px solid #7ea2ba;
+            border-left: 1px solid #7ea2ba;
+            border-bottom: 1px solid #7ea2ba; }
+            #contentArea #login #content-right #login-row #login-box #login-body #spacer {
+              height: 6px; }
+            #contentArea #login #content-right #login-row #login-box #login-body #input-area {
+              height: 50%; }
+              #contentArea #login #content-right #login-row #login-box #login-body #input-area .text-label {
+                font-family: inspira !important;
+                font-size: 14px !important;
+                color: #062951;
+                padding-top: 6px; 
+				text-align:left;
+				padding-left:25px;
+				}
+				#contentArea #login #content-right #login-row #login-box #login-body #input-area #sso, #contentArea #login #content-right #login-row #login-box #login-body #input-area #password {
+					margin-top: 10px;
+				}
+              #contentArea #login #content-right #login-row #login-box #login-body #input-area #sso input, #contentArea #login #content-right #login-row #login-box #login-body #input-area #password input {
+                width: 84%;
+                border-radius: 0px;
+                border: 1px solid #8b8b8b;
+                /*padding-left: 42px; 
+				margin-bottom: 18px;*/
+				}
+				#contentArea #login #content-right #login-row #login-box #login-body #input-area input[type="checkbox"] {
+					margin: 0px 5px 0px 0px;
+					
+				}
+              #contentArea #login #content-right #login-row #login-box #login-body #input-area #sso input {
+                /*background: url("../images/user-name_icon.png") no-repeat 0 white;*/ }
+              #contentArea #login #content-right #login-row #login-box #login-body #input-area #password input {
+                /*background: url("../images/password_icon.png") no-repeat 0 white;*/ }
+            #contentArea #login #content-right #login-row #login-box #login-body #button-box {
+              height: 20%; 
+			  margin-top:29px;
+			  }
+              #contentArea #login #content-right #login-row #login-box #login-body #button-box #login-btn {
+                font-family: inspira !important;
+                font-size: 16px !important;
+                color: #FFF;
+                background-color: #207de4;
+                border:none; }
+              #contentArea #login #content-right #login-row #login-box #login-body  #login-help {
+                /*padding: 6px 0px 0px 0px;*/ }
+                #contentArea #login #content-right #login-row #login-box #login-body  #login-help a {
+                  font-family: inspira !important;
+                  font-size: 13px !important;
+                  color: #062951; }

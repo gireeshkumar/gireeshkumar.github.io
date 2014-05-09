@@ -1,0 +1,206 @@
+<!DOCTYPE HTML>
+<html ng-app="myApp">
+    <head>
+        <title>WingMan</title> 
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <link href="assets/css/style.css" rel="stylesheet" type="text/css">
+        <link href="scripts/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link href="scripts/vendor/ng-scrollbar.min.css" rel="stylesheet" type="text/css">
+        <script src="scripts/vendor/angular-1.0.2/angular.js" type="text/javascript" charset="utf-8"></script>
+        <script src="scripts/vendor/angular-1.0.2/angular-sanitize.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="scripts/vendor/ng-scrollbar.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript" charset="utf-8">
+
+                    //var imagelist = ["CT EMEA Brivo CT325 ECR 2013 Epanel 12_11-1.jpg", "CT EMEA Brivo CT325 ECR 2013 Epanel 12_11-10.jpg", "CT EMEA Brivo CT325 ECR 2013 Epanel 12_11-11.jpg", "CT EMEA Brivo CT325 ECR 2013 Epanel 12_11-12.jpg", "CT EMEA Brivo CT325 ECR 2013 Epanel 12_11-2.jpg", "CT EMEA Brivo CT325 ECR 2013 Epanel 12_11-3.jpg", "CT EMEA Brivo CT325 ECR 2013 Epanel 12_11-4.jpg", "CT EMEA Brivo CT325 ECR 2013 Epanel 12_11-5.jpg", "CT EMEA Brivo CT325 ECR 2013 Epanel 12_11-6.jpg", "CT EMEA Brivo CT325 ECR 2013 Epanel 12_11-7.jpg", "CT EMEA Brivo CT325 ECR 2013 Epanel 12_11-8.jpg", "CT EMEA Brivo CT325 ECR 2013 Epanel 12_11-9.jpg", "Slide1 - Copy (2).JPG", "Slide1 - Copy (3).JPG", "Slide1 - Copy (4).JPG", "Slide1 - Copy.JPG", "Slide1.JPG", "Slide11 - Copy (2).JPG", "Slide11 - Copy (3).JPG", "Slide11 - Copy (4).JPG", "Slide11 - Copy.JPG", "Slide11.JPG", "Slide12 - Copy (2).JPG", "Slide12 - Copy (3).JPG", "Slide12 - Copy (4).JPG", "Slide12 - Copy.JPG", "Slide12.JPG", "Slide13 - Copy (2).JPG", "Slide13 - Copy (3).JPG", "Slide13 - Copy (4).JPG", "Slide13 - Copy.JPG", "Slide13.JPG", "Slide14 - Copy (2).JPG", "Slide14 - Copy (3).JPG", "Slide14 - Copy (4).JPG", "Slide14 - Copy.JPG", "Slide14.JPG", "Slide15 - Copy (2).JPG", "Slide15 - Copy (3).JPG", "Slide15 - Copy (4).JPG", "Slide15 - Copy.JPG", "Slide15.JPG", "Slide16 - Copy (2).JPG", "Slide16 - Copy (3).JPG", "Slide16 - Copy (4).JPG", "Slide16 - Copy.JPG", "Slide16.JPG", "Slide17 - Copy (2).JPG", "Slide17 - Copy (3).JPG", "Slide17 - Copy (4).JPG", "Slide17 - Copy.JPG", "Slide17.JPG", "Slide18 - Copy (2).JPG", "Slide18 - Copy (3).JPG", "Slide18 - Copy (4).JPG", "Slide18 - Copy.JPG", "Slide18.JPG", "Slide2 - Copy (2).JPG", "Slide2 - Copy (3).JPG", "Slide2 - Copy (4).JPG", "Slide2 - Copy.JPG", "Slide2.JPG", "Slide21 - Copy (2).JPG", "Slide21 - Copy (3).JPG", "Slide21 - Copy (4).JPG", "Slide21 - Copy.JPG", "Slide21.JPG", "Slide22 - Copy (2).JPG", "Slide22 - Copy (3).JPG", "Slide22 - Copy (4).JPG", "Slide22 - Copy.JPG", "Slide22.JPG", "Slide23 - Copy (2).JPG", "Slide23 - Copy (3).JPG", "Slide23 - Copy (4).JPG", "Slide23 - Copy.JPG", "Slide23.JPG", "Slide24 - Copy (2).JPG", "Slide24 - Copy (3).JPG", "Slide24 - Copy (4).JPG", "Slide24 - Copy.JPG", "Slide24.JPG", "Slide25 - Copy (2).JPG", "Slide25 - Copy (3).JPG", "Slide25 - Copy (4).JPG", "Slide25 - Copy.JPG", "Slide25.JPG", "Slide26 - Copy (2).JPG", "Slide26 - Copy (3).JPG", "Slide26 - Copy (4).JPG", "Slide26 - Copy.JPG", "Slide26.JPG", "Slide3 - Copy (2).jpg", "Slide3 - Copy (3).jpg", "Slide3 - Copy (4).jpg", "Slide3 - Copy.jpg", "Slide3.jpg", "Slide4 - Copy (2).JPG", "Slide4 - Copy (3).JPG", "Slide4 - Copy (4).JPG", "Slide4 - Copy.JPG", "Slide4.JPG", "Slide5 - Copy (2).JPG", "Slide5 - Copy (3).JPG", "Slide5 - Copy (4).JPG", "Slide5 - Copy.JPG", "Slide5.JPG", "Slide6 - Copy (2).JPG", "Slide6 - Copy (3).JPG", "Slide6 - Copy (4).JPG", "Slide6 - Copy.JPG", "Slide6.JPG", "Slide7 - Copy (2).JPG", "Slide7 - Copy (3).JPG", "Slide7 - Copy (4).JPG", "Slide7 - Copy.JPG", "Slide7.JPG", "Slide8 - Copy (2).JPG", "Slide8 - Copy (3).JPG", "Slide8 - Copy (4).JPG", "Slide8 - Copy.JPG", "Slide8.JPG"];
+                    var imagelist = []
+                    for (var i = 1; i < 21; i++) {
+                        imagelist.push("numbers/" + i + ".jpg");
+                    }
+                    console.log(imagelist);
+                    function PageController($scope) {
+
+                        $scope.loadAllImages = function() {
+                            $scope.allImagesToLoad = imagelist;
+                        }
+
+                        $scope.scrTop = 0;
+                        $scope.clearImages = function() {
+                            $scope.allImagesToLoad = [];
+                            //location.href = "redirect.html";
+                        }
+
+                        $scope.loadView = function() {
+                            //$scope.files = imagelist;
+                            $scope.filesInView = $scope.nextSetImages(0, 3);
+                            $scope.nextIndex = 1;
+                        }
+
+                        $scope.nextSetImages = function(idx, count) {
+                            var list = [];
+                            for (var i = idx, j = 0; i < (idx + count); i++, j++) {
+                                list[j] = imagelist[i];
+                            }
+                            return list;
+                        }
+
+                        $scope.divParentStyle = function() {
+                            return {height: imagelist.length * 400 + "px", backgroundColor: "silver", width: "600px"};
+                        }
+
+                    }
+                    var app = angular.module('myApp', ["ngSanitize", "ngScrollbar"]);
+                    app.directive("scroll", function($parse) {
+                        return function(scope, element, attrs) {
+                            angular.element(element).bind("scroll", function(e) {
+                                console.log(element[0].scrollTop);
+                            });
+                        };
+                    });
+
+                    app.directive("autoscroll", function($parse) {
+                        return function($scope, element, attrs) {
+                            //console.log(element);
+                            //element[0].children[0]
+
+                            var scroller = angular.element(element[0].children[1]);//.querySelector('.scroller'))[0];
+                            $scope.pageTop = 0;
+                            //var scroller = element[0].children[1].children[0];
+                            angular.element(scroller).bind("scroll", function(e) {
+                                var sclr = scroller[0];
+                                console.log(sclr.scrollTop);
+                                var itm = element[0].children[0].children[0];
+                                $scope.$apply(function() {
+                                    var diff = $scope.lastScrollTop - sclr.scrollTop
+                                    $scope.scrTop = sclr.scrollTop;
+                                    $scope.lastScrollTop = sclr.scrollTop;
+
+                                    //var tp = angular.element(itm).css('top');
+                                    // console.log("top::"+tp);
+                                    // var tp = parseInt(tp.split("px")[0]);
+                                    //console.log("top-1::"+tp);
+
+                                    if (isNaN(diff)) {
+                                        diff = 0;
+                                    }
+
+                                    $scope.pageTop = ($scope.pageTop + diff);
+
+                                    console.log("next page top:" + $scope.pageTop + 'px');
+
+                                    angular.element(itm).css('top', $scope.pageTop + 'px');
+                                    
+                                    var sval = sclr.scrollTop / 400;
+                                    sval = Math.round(sval);
+                                    
+                                   
+
+                                    $scope.sval = sval;
+                                     $scope.mde = sclr.scrollTop % 400;
+                                     
+                                    if ($scope.mde === 0 || $scope.mde % 62 === 0) {
+                                         $scope.filesInView = $scope.nextSetImages(sval, 2);
+                                        //angular.element(itm).css('top',"0px");
+                                        $scope.pageTop = 0;
+
+                                       // $scope.filesInView = $scope.nextSetImages($scope.nextIndex, 2);
+                                       // $scope.nextIndex = $scope.nextIndex + 1;
+
+                                        angular.element(itm).css('top', '0px');
+                                    }
+                                });
+
+                            });
+//                            angular.element(scroller).bind("onStyleChange", function(e) {
+//                                console.log("onStyleChange"+scroller.scrollTop);
+//                            });
+                        };
+                    });
+
+                    function onScrollEvent(e) {
+                        console.log("scroll event");
+                    }
+
+        </script>
+        <style>
+            .scrollme {
+                max-height: 200px;
+            }
+        </style>
+    </head>
+    <body ng-controller="PageController" >
+
+        <h2>Image Load test </h2>
+
+        <button ng-click="loadView()">Load View</button>
+
+        <!--
+                <div class="well" style="position:relative; width:100px;height:100px; border:1px solid gray;">
+                    large H<p></p>
+                    <div class="scrollme" ng-scrollbar style="position:absolute; height:100%; width:1em;top:0;right:0;overflow-x:hidden;overflow-y:scroll">
+                        <div style="width:1px;height:1000px;">
+                        </div>
+                    </div>
+                </div>
+        -->
+        <table>
+            <tr>
+                <td  style="vertical-align: top">
+                    <div autoscroll class="well" style="position:relative;width: 500px; height:400px" > 
+                        <div id="contentElement" style="height:100%;position:relative;overflow: hidden">
+                            <div class="scrollContentContainer" style="position:absolute;top:0px">
+                                <ul>
+                                    <li ng-repeat="item in filesInView" style="padding-top: 10px">
+                                        <img src="images/{{item}}" style="width:400px;height:400px"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div  id="scrollElement" style="position:absolute; height:100%; width:2em;top:0;right:0;overflow-x:hidden;overflow-y:scroll"
+                              onscroll="onScrollEvent()">
+                            <div class="scroller" style="verflow:hidden" ng-style="divParentStyle()">                   
+                            </div>
+                        </div>
+                    </div>
+                    <div>{{scrTop}} / {{mde}}  [{{sval}}]</div>
+                    <div>Files to load : {{filesInView}}</div>
+                </td>
+                <td style="vertical-align: top">
+                    <button ng-click="loadAllImages()">Load All Images </button>
+                    <button ng-click="clearImages()">Clear Images </button>
+                    <div style="height:400px; width:400px; overflow: scroll">
+                        <ul>
+                            <li ng-repeat="item in allImagesToLoad">
+                                <img src="images/{{item}}" style="width:400px;height:400px"/>
+                            </li>
+                        </ul>
+                    </div>
+
+                </td>
+            </tr>
+        </table>
+
+
+
+        <!--
+        
+        <div style="height:500px; width: 700px; overflow: scroll" scroll>
+            <div ng-style="divParentStyle()">
+                <ul>
+                    <li ng-repeat="item in filesInView">
+                        <img src="images/{{item}}" style="width:400px;height:400px"/>
+                    </li>
+                </ul>
+            </div>
+        -->
+        <!--
+        <ul>
+            <li ng-repeat="item in files">
+                <img src="images/{{item}}" style="width:400px;height:400px"/>
+            </li>
+        </ul>
+        --><!--
+    </div>
+        -->
+    </body>
+</html>
