@@ -131,10 +131,10 @@
     <body ng-controller="PageController" >
 
         <h2>Image Load test </h2>
-
+ <!--
         <button ng-click="loadView()">Load View</button>
 
-        <!--
+       
                 <div class="well" style="position:relative; width:100px;height:100px; border:1px solid gray;">
                     large H<p></p>
                     <div class="scrollme" ng-scrollbar style="position:absolute; height:100%; width:1em;top:0;right:0;overflow-x:hidden;overflow-y:scroll">
@@ -169,7 +169,7 @@
                 <td style="vertical-align: top">
                     <button ng-click="loadAllImages()">Load All Images </button>
                     <button ng-click="clearImages()">Clear Images </button>
-                    <div style="height:400px; width:400px; overflow: scroll">
+                    <div style="height:400px; width:500px; overflow: scroll">
                         <ul>
                             <li ng-repeat="item in allImagesToLoad">
                                 <img src="images/{{item}}" style="width:400px;height:400px"/>
