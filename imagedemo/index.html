@@ -166,10 +166,10 @@
                     <div>{{scrTop}} / {{mde}}  [{{sval}}]</div>
                     <div>Files to load : {{filesInView}}</div>
                 </td>-->
-                <td style="vertical-align: top">
+                <td style="vertical-align: top; padding-left:30px">
                     <button ng-click="loadAllImages()">Load All Images </button>
                     <button ng-click="clearImages()">Clear Images </button>
-                    <div style="height:400px; width:500px; overflow: scroll">
+                    <div style="height:500px; width:500px; overflow: scroll">
                         <ul>
                             <li ng-repeat="item in allImagesToLoad">
                                 <img src="images/{{item}}" style="width:400px;height:400px"/>
