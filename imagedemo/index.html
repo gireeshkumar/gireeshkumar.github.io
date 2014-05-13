@@ -15,7 +15,7 @@
                     //var imagelist = ["CT EMEA Brivo CT325 ECR 2013 Epanel 12_11-1.jpg", "CT EMEA Brivo CT325 ECR 2013 Epanel 12_11-10.jpg", "CT EMEA Brivo CT325 ECR 2013 Epanel 12_11-11.jpg", "CT EMEA Brivo CT325 ECR 2013 Epanel 12_11-12.jpg", "CT EMEA Brivo CT325 ECR 2013 Epanel 12_11-2.jpg", "CT EMEA Brivo CT325 ECR 2013 Epanel 12_11-3.jpg", "CT EMEA Brivo CT325 ECR 2013 Epanel 12_11-4.jpg", "CT EMEA Brivo CT325 ECR 2013 Epanel 12_11-5.jpg", "CT EMEA Brivo CT325 ECR 2013 Epanel 12_11-6.jpg", "CT EMEA Brivo CT325 ECR 2013 Epanel 12_11-7.jpg", "CT EMEA Brivo CT325 ECR 2013 Epanel 12_11-8.jpg", "CT EMEA Brivo CT325 ECR 2013 Epanel 12_11-9.jpg", "Slide1 - Copy (2).JPG", "Slide1 - Copy (3).JPG", "Slide1 - Copy (4).JPG", "Slide1 - Copy.JPG", "Slide1.JPG", "Slide11 - Copy (2).JPG", "Slide11 - Copy (3).JPG", "Slide11 - Copy (4).JPG", "Slide11 - Copy.JPG", "Slide11.JPG", "Slide12 - Copy (2).JPG", "Slide12 - Copy (3).JPG", "Slide12 - Copy (4).JPG", "Slide12 - Copy.JPG", "Slide12.JPG", "Slide13 - Copy (2).JPG", "Slide13 - Copy (3).JPG", "Slide13 - Copy (4).JPG", "Slide13 - Copy.JPG", "Slide13.JPG", "Slide14 - Copy (2).JPG", "Slide14 - Copy (3).JPG", "Slide14 - Copy (4).JPG", "Slide14 - Copy.JPG", "Slide14.JPG", "Slide15 - Copy (2).JPG", "Slide15 - Copy (3).JPG", "Slide15 - Copy (4).JPG", "Slide15 - Copy.JPG", "Slide15.JPG", "Slide16 - Copy (2).JPG", "Slide16 - Copy (3).JPG", "Slide16 - Copy (4).JPG", "Slide16 - Copy.JPG", "Slide16.JPG", "Slide17 - Copy (2).JPG", "Slide17 - Copy (3).JPG", "Slide17 - Copy (4).JPG", "Slide17 - Copy.JPG", "Slide17.JPG", "Slide18 - Copy (2).JPG", "Slide18 - Copy (3).JPG", "Slide18 - Copy (4).JPG", "Slide18 - Copy.JPG", "Slide18.JPG", "Slide2 - Copy (2).JPG", "Slide2 - Copy (3).JPG", "Slide2 - Copy (4).JPG", "Slide2 - Copy.JPG", "Slide2.JPG", "Slide21 - Copy (2).JPG", "Slide21 - Copy (3).JPG", "Slide21 - Copy (4).JPG", "Slide21 - Copy.JPG", "Slide21.JPG", "Slide22 - Copy (2).JPG", "Slide22 - Copy (3).JPG", "Slide22 - Copy (4).JPG", "Slide22 - Copy.JPG", "Slide22.JPG", "Slide23 - Copy (2).JPG", "Slide23 - Copy (3).JPG", "Slide23 - Copy (4).JPG", "Slide23 - Copy.JPG", "Slide23.JPG", "Slide24 - Copy (2).JPG", "Slide24 - Copy (3).JPG", "Slide24 - Copy (4).JPG", "Slide24 - Copy.JPG", "Slide24.JPG", "Slide25 - Copy (2).JPG", "Slide25 - Copy (3).JPG", "Slide25 - Copy (4).JPG", "Slide25 - Copy.JPG", "Slide25.JPG", "Slide26 - Copy (2).JPG", "Slide26 - Copy (3).JPG", "Slide26 - Copy (4).JPG", "Slide26 - Copy.JPG", "Slide26.JPG", "Slide3 - Copy (2).jpg", "Slide3 - Copy (3).jpg", "Slide3 - Copy (4).jpg", "Slide3 - Copy.jpg", "Slide3.jpg", "Slide4 - Copy (2).JPG", "Slide4 - Copy (3).JPG", "Slide4 - Copy (4).JPG", "Slide4 - Copy.JPG", "Slide4.JPG", "Slide5 - Copy (2).JPG", "Slide5 - Copy (3).JPG", "Slide5 - Copy (4).JPG", "Slide5 - Copy.JPG", "Slide5.JPG", "Slide6 - Copy (2).JPG", "Slide6 - Copy (3).JPG", "Slide6 - Copy (4).JPG", "Slide6 - Copy.JPG", "Slide6.JPG", "Slide7 - Copy (2).JPG", "Slide7 - Copy (3).JPG", "Slide7 - Copy (4).JPG", "Slide7 - Copy.JPG", "Slide7.JPG", "Slide8 - Copy (2).JPG", "Slide8 - Copy (3).JPG", "Slide8 - Copy (4).JPG", "Slide8 - Copy.JPG", "Slide8.JPG"];
                     var imagelist = []
                     for (var i = 1; i < 21; i++) {
-                        imagelist.push("numbers/" + i + ".jpg");
+                        imagelist.push("images/numbers/" + i + ".jpg");
                     }
                     for(var i = 5; i < 9; i++){
                         imagelist.push("http://wallpaperhdcar.com/wp-content/uploads/2014/05/hd-car-interior-wallpaper-"+i+".jpg")
@@ -172,10 +172,10 @@
                 <td style="vertical-align: top; padding-left:30px">
                     <button ng-click="loadAllImages()">Load All Images </button>
                     <button ng-click="clearImages()">Clear Images </button>
-                    <div style="height:500px; width:500px; overflow: scroll">
+                    <div style="height:500px; width:700px; overflow: scroll">
                         <ul>
                             <li ng-repeat="item in allImagesToLoad">
-                                <img src="images/{{item}}" style="width:400px;height:400px"/>
+                                <img src="{{item}}" style="width:400px;height:400px"/>
                             </li>
                         </ul>
                     </div>
