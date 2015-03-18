@@ -157,10 +157,14 @@ app.controller('MainCtrl', ['$scope', '$http', 'uiGridConstants', '$interval', '
                             }
 							
 							for(i = 0; i < data.length; i++){
-							data[i].subGridOptions = {
-							  columnDefs: [ {name:"Id", field:"id"},{name:"Name", field:"name"} ],
-							  data: data[i].friends
+								data[i].subGridOptions = {
+								  columnDefs: [ {name:"Id", field:"id"},{name:"Name", field:"name"} ],
+								  data: data[i].friends
+								};
 							}
+							
+													
+							
                         }
                         
                          $scope.loadEndTime = new Date().getTime();
