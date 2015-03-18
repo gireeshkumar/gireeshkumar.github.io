@@ -141,7 +141,7 @@ app.controller('MainCtrl', ['$scope', '$http', 'uiGridConstants', '$interval', '
             
             $http.get(url)
                     .error(function(data) {
-                        alert("failed");
+                        alert("failed to load data");
                     })
                     .success(function(data) {
                         for (i = 0; i < data.length; i++) {
@@ -155,6 +155,12 @@ app.controller('MainCtrl', ['$scope', '$http', 'uiGridConstants', '$interval', '
                                 data[i].pet = 'dog'
                                 data[i].foo = {bar: [{baz: 2, options: [{value: 'dog'}, {value: 'cat'}]}]}
                             }
+							
+							for(i = 0; i < data.length; i++){
+							data[i].subGridOptions = {
+							  columnDefs: [ {name:"Id", field:"id"},{name:"Name", field:"name"} ],
+							  data: data[i].friends
+							}
                         }
                         
                          $scope.loadEndTime = new Date().getTime();
