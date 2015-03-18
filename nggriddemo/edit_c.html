@@ -1,0 +1,103 @@
+
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7 ng-app:" ng-app="app" lang="en" ><![endif]-->
+<!--[if IE 7]>   <html class="no-js lt-ie9 lt-ie8 ng-app:" ng-app="app" lang="en" > <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9 ng-app:" ng-app="app" lang="en" > <![endif]-->
+
+
+<!--[if gt IE 8]><!--><html ng-app="app" lang="en" class="no-js" > <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>Grid Demo</title>
+        <link rel="stylesheet" href="/stylesheets/style.css">
+
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css"/>
+        <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.css"/>
+        <link rel="stylesheet" href="javascripts/ui-grid.info/unstable/ui-grid-unstable.css"/>
+        <link rel="stylesheet" href="javascripts/ui-grid.info/unstable/font-awesome.css"/>
+
+        <script src="output.min.js"></script>
+
+
+        <script src="javascripts/grunt-scripts/csv.js"></script>
+        <script src="javascripts/grunt-scripts/pdfmake.js"></script>
+        <script src="javascripts/grunt-scripts/vfs_fonts.js"></script>
+
+
+    </head>
+    <body>
+        <div ng-controller="MainCtrl">
+            
+            <p><label>Select data set</label>
+                <select name="datasel" ng-model="dataset">
+                    <option value="100_complex.json" >100 records</option>
+                    <option value="500_complex.json" selected="selected">500 records</option>
+                    <option value="1000_complex.json">1000 records</option>
+                    <option value="5000_complex.json" >5000 records</option>
+                      <option value="10000_complex.json" >10000 records</option>
+                </select>
+                <small>{{loadMessage}}</small>
+            </p>
+        
+            <p>
+                <label>Smart Search</label>
+                <input type="text" ng-model="filterData"/>
+                <span><i class="ui-grid-icon-cancel" ng-show="!!filterData" ng-click="clearFilter()" style="cursor: pointer">&nbsp;</i></span><span style="padding-left: 5px"><input type="checkbox" ng-model="matchcase"> &nbsp;<label>Match case</label></span>
+            <p><small>(Minimum 3 characters)</small> <small>(Note: smart search has performance hit based on the number of rows in the result set)</small></p>
+            </p>
+            <div id="grid1" ui-grid="gridOptions" class="grid"
+                 ui-grid-edit  
+                 ui-grid-resize-columns  
+                 ui-grid-exporter 
+                 ui-grid-selection
+                  ui-grid-pinning 
+                  ui-grid-expandable 
+                   ui-grid-move-columns
+                   ui-grid-cellNav></div>
+        </div>
+
+        <div>
+            <h4>Sample Data JSON Structure </h4>
+            
+            <pre>
+                {
+                    "id": 0,
+                    "guid": "de3db502-0a33-4e47-a0bb-35b6235503ca",
+                    "isActive": false,
+                    "balance": "$3,489.00",
+                    "picture": "http://placehold.it/32x32",
+                    "age": 30,
+                    "name": "Sandoval Mclean",
+                    "gender": "male",
+                    "company": "Zolavo",
+                    "email": "sandovalmclean@zolavo.com",
+                    "phone": "+1 (902) 569-2412",
+                    "address": {
+                        "street": 317,
+                        "city": "Blairstown",
+                        "state": "Maine",
+                        "zip": 390
+                    },
+                    "about": "Fugiat velit laboris sit est. Amet eu consectetur reprehenderit proident irure non. Adipisicing mollit .\r\n",
+                    "registered": "1991-02-21T23:02:31+06:00",
+                    "friends": [
+                        {
+                            "id": 0,
+                            "name": "Rosanne Barrett"
+                        },
+                        {
+                            "id": 1,
+                            "name": "Nita Chase"
+                        },
+                        {
+                            "id": 2,
+                            "name": "Briggs Stark"
+                        }
+                    ]
+                }
+            </pre>
+        </div>
+
+    </body>
+</html>
