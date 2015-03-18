@@ -134,7 +134,7 @@ app.controller('MainCtrl', ['$scope', '$http', 'uiGridConstants', '$interval', '
 
             $scope.gridOptions.data = $scope.gridOptions.orgData = [];
 
-            var url = '/data/' + $scope.dataset;
+            var url = 'data/' + $scope.dataset;
             console.log(url);
             $scope.loadMessage = "Loading";
             $scope.loadStartTime = new Date().getTime();
