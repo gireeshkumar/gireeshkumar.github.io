@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<!--
+gireeshkumar.g@gmail.com
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+        <style type="text/css">
+            .green{
+                display: inline;
+                width: 20px;
+                height: 20px;
+                background-color: green;
+                border: white solid thin;
+                position: absolute;
+            }
+            .red{
+                display: inline;
+                width: 20px;
+                height: 20px;
+                background-color: red;
+                border: white solid thin;
+                position: absolute;
+            }
+            .newline{
+                display: block !important;
+                float: left;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <label>Cube Size </label><input type="text" id="cin" value="20"/>
+            <button id="btt">Build</button>
+        </div>
+        <div id="container">
+            
+        </div>
+        <script type="text/javascript">
+            
+            
+            $("#btt").click(function(){
+                var val = parseInt($("#cin").val());
+                rows = cols = val;
+                $("#container").empty();
+                buildCube();
+            });
+            
+            var rows = cols = 20;
+            
+            function buildCube(){
+                var redpos = 0;
+            
+                var cnt = $("#container");
+                var dtop = 10;
+                var dleft = 10;
+                var rowindex = -1;
+                for(var i = 0; i < (rows*cols); i++){
+                        dleft += 20;
+
+                        var div = $("<div>");
+                        if(i % cols == 0){
+                            dtop += 20;
+                            dleft = 10;
+                            div.addClass("newline");
+                            rowindex++;
+                        }
+
+                        div.addClass(((i%cols) == rowindex || (i%(cols-1)) == 0) ? 'red' : 'green');
+
+                        div.css({'top': dtop+'px', 'left': dleft+'px'});
+                        
+                        div.click(function(){
+                            $(this).css("background-color","white");
+                        });
+                        
+                        cnt.append(div);
+                        
+                    }
+            
+            }
+            
+            
+            buildCube();
+           
+            
+        </script>
+    </body>
+</html>
