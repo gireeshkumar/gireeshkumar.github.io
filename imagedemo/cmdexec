@@ -1,7 +1,5 @@
-sudo apt-get install graphviz ghostscript postgresql-client \
-python-dateutil python-feedparser python-matplotlib \
-python-ldap python-libxslt1 python-lxml python-mako \
-python-openid python-psycopg2 python-pybabel python-pychart \
-python-pydot python-pyparsing python-reportlab python-simplejson \
-python-tz python-vatnumber python-vobject python-webdav \
-python-werkzeug python-xlwt python-yaml python-imaging
+sudo apt-get install gcc python-dev mc bzr python-setuptools python-babel \
+python-feedparser python-reportlab-accel python-zsi python-openssl \
+python-egenix-mxdatetime python-jinja2 python-unittest2 python-mock \
+python-docutils lptools make python-psutil python-paramiko poppler-utils \
+python-pdftools antiword postgresql
