@@ -1,1 +1,1 @@
-http://hq.esd.sasinstitute.net/esd/0000-0000-0002/000000/esdclient__94300__win__xx__web__1.exe
+wget http://hq.esd.sasinstitute.net/esd/0000-0000-0002/000000/esdclient__94300__win__xx__web__1.exe
