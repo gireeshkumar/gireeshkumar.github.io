@@ -94,7 +94,7 @@
                           <label for="first_name">Input</label>
                         </div>
                         <div class="input-field col s12">
-                          <input placeholder="Rate(calculated)" id="ndInputD" readonly type="text" class="validate">
+                          <input placeholder="Rate(calculated)" id="ndInputR" readonly type="text" class="validate">
                           <label for="first_name">Rate</label>
                         </div>
                          <div class=" col s12">
@@ -194,6 +194,26 @@
        $(document).ready(function(){
           $('ul.tabs').tabs();
          
+          $("#ndEval").click(function(){
+               var metadata = JSON.parse( $("#txtJSON").val() );
+               var denom = $("#ndInputD").val();
+              var nume = $("#ndInputN").val();
+          
+             var numVal = parseInt(nume);
+             var denVal = parseInt(denom);
+             var rate = numVal / denVal;
+           
+              $("#ndInputR").val(rate);
+          
+              var input = {rate: rate, num:40, denom:30 };
+              console.log(metadata);
+              console.log(input);
+          
+             var rslt = evalExpressionObj( metadata, input );
+              $("#rslt2").html(rslt);
+              
+          });
+          
           $("#txtEval").click(function(){
            
             var jsonstr = $("#txtJSON").val();
