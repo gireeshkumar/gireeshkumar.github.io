@@ -87,11 +87,11 @@
                     <div class="row">
                          <div class="input-field col s12">
                           <input placeholder="Enter numerator" id="ndInputN" type="text" class="validate">
-                          <label for="first_name">Input</label>
+                          <label for="first_name">Numerator</label>
                         </div>
                          <div class="input-field col s12">
                           <input placeholder="Enter denominator" id="ndInputD" type="text" class="validate">
-                          <label for="first_name">Input</label>
+                          <label for="first_name">Denominator</label>
                         </div>
                         <div class="input-field col s12">
                           <input placeholder="Rate(calculated)" id="ndInputR" readonly type="text" class="validate">
@@ -195,7 +195,9 @@
           $('ul.tabs').tabs();
          
           $("#ndEval").click(function(){
-               var metadata = JSON.parse( $("#txtJSON").val() );
+          
+               var jsontext = $("#ndJSON").val();
+               var metadata = JSON.parse( jsontext );
                var denom = $("#ndInputD").val();
               var nume = $("#ndInputN").val();
           
