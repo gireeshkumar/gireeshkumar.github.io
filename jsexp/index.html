@@ -116,10 +116,10 @@
             var jsonstr = $("#txtJSON").val();
             var metadata = JSON.parse(jsonstr);
             var val = $.trim($("#txtInput").val());            
-            var valobj = val.length > 0 > {input:val} : null;
+            var valobj = val.length > 0 ? {input:val} : null;
             
             console.log(metadata);
-            console.log(valobj);
+            console.log(valobj); 
             
             var data = evalExpressionObj( metadata, valobj);
             console.log(data);
