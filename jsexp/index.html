@@ -54,7 +54,7 @@
                   <div class="col s5">
                       <div class="row">
                        <div class="input-field col s12">
-                        <textarea id="textarea1" class="materialize-textarea">                         
+                        <textarea   class="materialize-textarea" id="txtJSON">                         
                           {
                               func:'validData', 
                               params:['input'],
@@ -66,14 +66,14 @@
                       </div>
                   </div>
                   <div class="col s2">
-                       <button class="btn waves-effect waves-light" type="submit" name="action">Evaluate
+                       <button class="btn waves-effect waves-light" id="txtEval" type="submit" name="action">Evaluate
                          <i class="material-icons right">send</i>
                       </button>
                    </div>
                   <div class="col s5">
                     <div class="row">
                        <div class="input-field col s12">
-                        <input placeholder="Enter input value here" id="input" type="text" class="validate">
+                        <input placeholder="Enter input value here" id="txtInput" type="text" class="validate">
                         <label for="first_name">Input</label>
                       </div>
                       </div>                   
@@ -101,10 +101,21 @@
   <!--  Scripts-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="bower_components/materialize/dist/js/materialize.min.js"></script>
+    <script type="text/javascript" src="base_lib.js"></script>
   <script src="js/init.js"></script>
  <script type="text/javascript" >
        $(document).ready(function(){
           $('ul.tabs').tabs();
+         
+          $("#txtEval").click(function(){
+            alert("Evaluate");
+            var jsonstr = $("#txtJSON").value();
+            alert(jsonstr);
+            var inputstr = $("#txtInput").value();
+             alert(jsonstr);
+          //  var data = evalExpressionObj( metadata, {input:'this is some data'});
+          });
+         
         });
       </script>
   </body>
