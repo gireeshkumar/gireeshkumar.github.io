@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+-<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -35,7 +35,69 @@
               <li class="tab col s3"><a href="#test5" class="active">TextInput</a></li>
             </ul>
           </div>
-          <div id="test1" class="col s12">Yes/No</div>
+          <div id="test1" class="col s12">
+		  
+		   <div class="row">
+                  <div class="col s12">
+                    
+                    <div class="card blue-grey darken-1">
+                      <div class="card-content white-text">
+                        <span class="card-title">Yes/No</span>
+                        <p> Yes = 3 , No = 0</p>
+                      </div>                     
+                    </div>                    
+                  
+                   </div>
+                  <div class="col s8">
+                      <div class="row">
+                       <div class="input-field col s12">
+                        <textarea   class="materialize-textarea" id="ynJSON">                         
+{
+"func":" multichoice", 
+"params":["input"],
+"config":{"yes":3,"no":0}
+}
+                       
+                         </textarea>
+                        <label for="textarea1">JSON Metadata(Change config 'yes'/'no' value)</label>
+                      </div>
+                      </div>
+                  </div>
+                  <div class="col s4">
+                    <div class="row">
+                       <div class="input-field col s12">
+                       
+						<select id="ynSel">
+						  <option value="yes">Yes</option>
+						  <option value="no">No</option>
+						</select>
+						<label>Choice</label>					   
+                      </div>
+					  
+					  <div class="input-field col s12">
+							<button class="btn waves-effect waves-light" id="ynEval" type="submit" name="action">Evaluate
+							 <i class="material-icons right">send</i>
+						  </button>
+                      </div>
+					  
+                      </div>                   
+                   </div>
+                   
+                    <div class="col s12">
+                    
+                    <div class="card lime lighten-2">
+                      <div class="card-content left-align">
+                        <span class="card-title">Result:</span>
+                        <p id="rslt1"></p>
+                      </div>                     
+                    </div>                    
+                  
+                   </div>
+                   
+                </div>
+		  
+		  
+		  </div>
           <div id="test2" class="col s12">
           
             <div class="row">
@@ -61,7 +123,7 @@
 			  "rslt":0
 		   },
 		   {
-			  "exp":{"left":"rate", "right":95, "operator":">"},
+			  "exp":{"left":"rate", "right":95, "operator":">="},
 			  "rslt":3
 		   },
 		   {
@@ -194,6 +256,20 @@
  <script type="text/javascript" >
        $(document).ready(function(){
           $('ul.tabs').tabs();
+		  
+		  $("#ynEval").click(function(){
+		  
+		      var jsontext = $("#ynJSON").val();
+              var metadata = JSON.parse( jsontext );
+			  console.log(metadata);
+		  
+			  var selVal = $("#ynSel").val();
+			  console.log(selVal);
+			  
+			  var rslt = evalExpressionObj( metadata, {input:selVal})  
+			  console.log(rlst);
+			  $("#rslt1").html(rslt);
+		  });
          
           $("#ndEval").click(function(){
           
@@ -216,7 +292,7 @@
              console.log("Result:"+rslt);
               $("#rslt2").html(rslt);
           
-          $("#rslt2Exp").html(EvelLib.genExpImpl(metadata.config));
+          $("#rslt2Exp").html("JSScript::"+EvelLib.genExpImpl(metadata.config));
           
               
           });
