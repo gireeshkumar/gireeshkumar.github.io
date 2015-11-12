@@ -267,7 +267,8 @@
  <script type="text/javascript" >
        $(document).ready(function(){
           $('ul.tabs').tabs();
-		  
+          $('select').not('.disabled').material_select();
+		   
 		  $("#ynEval").click(function(){
 		  
 		      var jsontext = $("#ynJSON").val();
