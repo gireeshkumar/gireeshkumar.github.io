@@ -55,15 +55,15 @@
                       <div class="row">
                        <div class="input-field col s12">
                         <textarea   class="materialize-textarea" id="txtJSON">                         
-                         {
-                              "func": "validData",
-                              "params": [
-                                  "input"
-                              ],
-                              "config": {
-                                  "rslt": 3
-                              }
-                          }                        
+{
+  "func": "validData",
+  "params": [
+      "input"
+  ],
+  "config": {
+      "rslt": 3
+  }
+}                        
                          </textarea>
                         <label for="textarea1">JSON Metadata</label>
                       </div>
@@ -115,14 +115,15 @@
             alert("Evaluate");
             var jsonstr = $("#txtJSON").val();
             var metadata = JSON.parse(jsonstr);
-            var val = $("#txtInput").val();
-            var valobj = {input:val};
+            var val = $.trim($("#txtInput").val());            
+            var valobj = val.length > 0 > {input:val} : null;
             
             console.log(metadata);
             console.log(valobj);
             
             var data = evalExpressionObj( metadata, valobj);
             console.log(data);
+            $("#rslt5").html(data);
           });
          
         });
