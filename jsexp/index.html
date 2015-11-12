@@ -111,6 +111,7 @@
                       <div class="card-content left-align">
                         <span class="card-title">Result:</span>
                         <p id="rslt2"></p>
+                        <p id="rslt2Exp"></p>
                       </div>                     
                     </div>                    
                   
@@ -214,6 +215,9 @@
              var rslt = evalExpressionObj( metadata, input );
              console.log("Result:"+rslt);
               $("#rslt2").html(rslt);
+          
+          $("#rslt2Exp").html(EvelLib.genExpImpl(metadata.config));
+          
               
           });
           
