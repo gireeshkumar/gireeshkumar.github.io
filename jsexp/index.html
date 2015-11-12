@@ -110,10 +110,15 @@
           $("#txtEval").click(function(){
             alert("Evaluate");
             var jsonstr = $("#txtJSON").val();
-            alert(jsonstr);
-            var inputstr = $("#txtInput").val();
-             alert(jsonstr);
-          //  var data = evalExpressionObj( metadata, {input:'this is some data'});
+            var metadata = JSON.parse(jsonstr);
+            var val = $("#txtInput").val();
+            var valobj = {input:val};
+            
+            console.log(metadata);
+            console.log(valobj);
+            
+            var data = evalExpressionObj( metadata, valobj);
+            console.log(data);
           });
          
         });
