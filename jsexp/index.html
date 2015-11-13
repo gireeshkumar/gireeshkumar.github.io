@@ -29,11 +29,12 @@
         <div class="row">
           <div class="col s12">
             <ul class="tabs">
-              <li class="tab col s3"><a href="#test1">Yes/No</a></li>
-              <li class="tab col s3"><a  href="#test2">Num/Demo</a></li>
-              <li class="tab col s3"><a href="#test3">Multichoice</a></li>
-              <li class="tab col s3"><a href="#test4">Volume</a></li>
-              <li class="tab col s3"><a href="#test5">TextInput</a></li>
+              <li class="tab col s2"><a href="#test1">Yes/No</a></li>
+              <li class="tab col s2"><a  href="#test2">Num/Demo</a></li>
+              <li class="tab col s2"><a href="#test3">Multichoice</a></li>
+              <li class="tab col s2"><a href="#test4">Volume</a></li>
+              <li class="tab col s2"><a href="#test5">TextInput</a></li>
+              <li class="tab col s3"><a href="#test6">Custom Expression</a></li>
             </ul>
           </div>
           <div id="test1" class="col s12">
@@ -406,6 +407,89 @@
                 </div>
                 <!-- textinput tab end -->
            </div>
+           
+           <div id="test6" class="col s12">
+             <!-- customexpression tab start -->
+             
+             <div class="row">
+                  <div class="col s12">
+                    
+                    <div class="card blue-grey darken-1">
+                      <div class="card-content white-text">
+                        <span class="card-title">Custom Expression via JSON</span>
+                        <p> </p>
+                      </div>                     
+                    </div>                    
+                  
+                   </div>
+                  <div class="col s8">
+                      <div class="row">
+                       <div class="input-field col s12">
+                          <textarea   class="materialize-textarea" id="expJSON">             
+
+{	"func":"evaluate",
+	"params":["value1","value2","value3"],
+	"config":[
+		 {
+		   "type":"and",
+  			"exp":[
+  				{"left":"value1", "right":"yes", "operator":"=="},
+  				{"left":"value2", "right":"yes", "operator":"=="},
+  				{"left":"value3", "right":"yes", "operator":"!="}
+  			]
+		 }
+	]
+}
+
+
+                       </textarea>
+                        <label for="textarea1">JSON Metadata (Change rule and 'param' names)</label>
+                      </div>
+                      </div>
+                  </div>
+                
+                   
+                  <div class="col s4">
+                    <div class="row">
+                       
+                                              <div class="input-field col s12">
+                        <textarea   class="materialize-textarea" id="cJSONInput">                         
+{
+  "value1":"yes", 
+  "value2":"yes",
+  "value3":"no"
+}                        
+                         </textarea>
+                        <label for="textarea1">JSON Input</label>
+                      </div>
+                       
+                      
+                       <div class="input-field col s12">
+                         <button class="btn waves-effect waves-light" id="evalCS" type="submit" name="action">Evaluate
+                           <i class="material-icons right">send</i>
+                        </button>
+                      </div>
+                      
+                      </div>                   
+                   </div>
+                   
+                    
+                      
+                    <div class="col s12">
+                  
+                    <div class="card lime lighten-2">
+                      <div class="card-content left-align">
+                        <span class="card-title" id="exprslt">Result: </span>
+                         <p id="rslt_exp" class=" left-align"></p>
+                      </div>                     
+                    </div>                    
+                  
+                   </div>
+             
+             </div>
+             <!-- customexpression tab end -->
+           </div>
+           
         </div>    
 
     </div>
@@ -422,6 +506,23 @@
           $('ul.tabs').tabs();
           $('select').not('.disabled').material_select();
 		   
+	$("#evalCS").click(function() {
+	   
+	   var jsontext = $("#expJSON").val();
+     var expJSON = JSON.parse( jsontext );
+     
+     var jsontext = $("#cJSONInput").val();
+     var cJSONInput = JSON.parse( jsontext );
+	    
+	      var expression = EvelLib.genExpImpl(expJSON.config, cJSONInput );
+	    $("#rslt_exp").html(expression);
+	    
+	     var rslt = evalExpressionObj( expJSON, cJSONInput);  
+	    console.log("Result:"+rslt);
+	    $("#exprslt").html("Result: "+rslt);
+	  
+	});
+	
 	
 		  $("#mcEval").click(function(){
 		  

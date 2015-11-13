@@ -1,6 +1,6 @@
 function toExp(e){
 	var n=" ";
-	return n+=e.left+" "+e.operator+" "+e.right
+	return n+=e.left+" "+e.operator+" "+(typeof e.right === "string" ? ('"'+e.right+'"') : e.right);
 }
 function isNested(expobj){
     return "undefined" !=typeof expobj.type && "undefined"!=typeof expobj.exp;
@@ -28,7 +28,16 @@ function genJS(e){
     }
 }
 function generateJS(e){
-	return"if("+genJS(e)+") {return "+e.rslt+";}"
+    if(e.rslt === null || typeof e.rslt === "undefined"){
+        return genJS(e);
+    }else{
+        return"if("+genJS(e)+") {return "+e.rslt+";}"
+    }
+	
+}
+
+function evalDirectExpression(expObj,params){
+    
 }
 
 function evalExpressionObj(expObj,params){
@@ -51,13 +60,18 @@ function evalExpressionObj(expObj,params){
             }
         }
     }
-    
-    return ( EvelLib[fnc]).apply (null, arr);   
+    if(fnc === "evaluate"){
+         return EvelLib.evaluate(config, paramkeys, arr.splice(1, arr.length));
+    }else{
+         return ( EvelLib[fnc]).apply (null, arr);   
+    }
+   
     
 }
 
 //// Libs ///
 EvelLib = {
+    
     genExpImpl : function(cnf){
         var exp = "";
         for(var i = 0; i < cnf.length; i++){           
@@ -70,6 +84,12 @@ EvelLib = {
     },
     genNumberND : function(cnf, input){     
         return new Function('rate','num','denom',EvelLib.genExpImpl(cnf) )(input);
+    },
+    evaluate: function(cnf, params, input){
+        console.log(cnf);console.log(params);console.log(input);
+        
+         var rslt = new Function(params, "return (" + EvelLib.genExpImpl(cnf) + " );").apply(null, input);
+         return (typeof rslt === "undefined" ? false : rslt);
     },
 	multichoice : function(config,input){
         console.log("config:"+config);
