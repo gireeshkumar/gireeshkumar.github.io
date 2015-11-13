@@ -32,6 +32,10 @@ function generateJS(e){
 }
 
 function evalExpressionObj(expObj,params){
+    console.log("evalExpressionObj");
+    console.log("metadata:");console.log(expObj);
+    console.log("Params:");console.log(params);
+    
     var fnc = expObj.func;
     var paramkeys = expObj.params;
     var config = expObj.config;

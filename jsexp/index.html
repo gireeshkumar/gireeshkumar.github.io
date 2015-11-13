@@ -3,7 +3,7 @@
 <head> 
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-  <title>Starter Template - Materialize</title>
+  <title>Expression evaluation test</title>
 
   
   <!-- CSS  -->
@@ -33,7 +33,7 @@
               <li class="tab col s3"><a  href="#test2">Num/Demo</a></li>
               <li class="tab col s3"><a href="#test3">Multichoice</a></li>
               <li class="tab col s3"><a href="#test4">Volume</a></li>
-              <li class="tab col s3"><a href="#test5" class="active">TextInput</a></li>
+              <li class="tab col s3"><a href="#test5">TextInput</a></li>
             </ul>
           </div>
           <div id="test1" class="col s12">
@@ -69,6 +69,7 @@
                        <div class="input-field col s12">
                        
                           <select id="ynSel">
+                            <option value="" selected id="selopt1">Choose your option</option>
                             <option value="yes">Yes</option>
                             <option value="no">No</option>
                           </select>
@@ -80,8 +81,10 @@
                          <i class="material-icons right">send</i>
                         </button>
                        </div>
-
-                    </div>                   
+                       
+                       
+                    </div>  
+                    
                    </div>
                    
                     <div class="col s12">
@@ -99,6 +102,7 @@
 		  
 		  
 		  </div>
+		  
           <div id="test2" class="col s12">
           
             <div class="row">
@@ -171,12 +175,14 @@
                             <label>Materialize Select</label>
                           </div>
           
+          
+          
                          <div class=" col s12">
                            <button class="btn waves-effect waves-light" id="ndEval" type="submit" name="action">Evaluate
                              <i class="material-icons right">send</i>
                           </button>
-                       </div>
-                      </div>                   
+                        </div> 
+                        </div>
                    </div>
                    
                     <div class="col s12">
@@ -195,8 +201,149 @@
           
           
           </div>
-          <div id="test3" class="col s12">Test 3</div>
-          <div id="test4" class="col s12">Test 4</div>
+          
+          
+          <div id="test3" class="col s12">
+            <!-- multichoice tab start-->
+            <div class="row">
+                  <div class="col s12">
+                    
+                    <div class="card blue-grey darken-1">
+                      <div class="card-content white-text">
+                        <span class="card-title">Multichoice</span>
+                        <p> Stage1 = 4, Stage2 = 5, Stage3 = 2, Optout = 0</p>
+                      </div>                     
+                    </div>                    
+                  
+                   </div>
+                  <div class="col s8">
+                      <div class="row">
+                       <div class="input-field col s12">
+                        <textarea   class="materialize-textarea" id="mcJSON">                         
+{
+"func":"multichoice", 
+"params":["input"],
+"config":{"stage1":4,"stage2":5, "stage3":2}
+}
+                       
+                         </textarea>
+                        <label for="textarea1">JSON Metadata(Change config 'stage' value)</label>
+                      </div>
+                      </div>
+                  </div>
+                  <div class="col s4">
+                    <div class="row">
+                       <div class="input-field col s12">
+                       
+                          <select id="mcSel">
+                            <option value="" selected>Choose your option</option>
+                            <option value="stage1">Stage 1</option>
+                            <option value="stage2">Stage 2</option>
+                            <option value="stage3">Stage 3</option>
+                          </select>
+                          <label>Choice</label>					   
+                      </div>
+					  
+                      <div class="input-field col s12">
+                        <button class="btn waves-effect waves-light" id="mcEval" type="submit" name="action">Evaluate
+                         <i class="material-icons right">send</i>
+                        </button>
+                       </div>
+
+                    </div>                   
+                   </div>
+                   
+                    <div class="col s12">
+                    
+                    <div class="card lime lighten-2">
+                      <div class="card-content left-align">
+                        <span class="card-title">Result:</span>
+                        <p id="mc_rslt"></p>
+                      </div>                     
+                    </div>                    
+                  
+                   </div>
+                   
+                </div>
+            <!-- mutlichoice tab end -->
+          </div>
+          <div id="test4" class="col s12">
+            <!-- volume tab start -->
+            
+            <div class="row">
+                  <div class="col s12">
+                    
+                    <div class="card blue-grey darken-1">
+                      <div class="card-content white-text">
+                        <span class="card-title">Volume / Rate / Ratio</span>
+                        <p> >=95%	= 3, >=80%	= 2, &lt;80%	= 0 </p>
+                      </div>                     
+                    </div>                    
+                  
+                   </div>
+                  <div class="col s8">
+                      <div class="row">
+                       <div class="input-field col s12">
+                        <textarea   class="materialize-textarea" id="volJSON">                         
+{        "func":"genNumber",                                  
+  "params":["input"],
+  "config":[
+		   {                   
+			  "exp":{"left":"input", "right":95, "operator":">="},
+			  "rslt":3
+		   },
+		   {
+			  "type":"and",
+					 "exp":[
+							  {"left":"input", "right":95, "operator":"<"},
+							  {"left":"input", "right":85, "operator":">="}
+					 ],
+			  "rslt":4
+		   },
+		   {                    
+			  "exp":{"left":"input", "right":80, "operator":"<"},
+			  "rslt":5
+		   }
+  ]
+}                       
+                         </textarea>
+                        <label for="textarea1">JSON Metadata</label>
+                      </div>
+                      </div>
+                  </div>
+                
+                   
+                  <div class="col s4">
+                    <div class="row">
+                       <div class="input-field col s12">
+                        <input placeholder="Enter input value here" id="txtInputVol" type="text" class="validate">
+                        <label for="first_name">Input</label>
+                      </div>
+                      
+                       <div class="input-field col s12">
+                         <button class="btn waves-effect waves-light" id="volEval" type="submit" name="action">Evaluate
+                           <i class="material-icons right">send</i>
+                        </button>
+                      </div>
+                      
+                      </div>                   
+                   </div>
+                   
+                    <div class="col s12">
+                    
+                    <div class="card lime lighten-2">
+                      <div class="card-content left-align">
+                        <span class="card-title">Result:</span>
+                        <p id="rsltVol"></p>
+                      </div>                     
+                    </div>                    
+                  
+                   </div>
+                   
+                </div>
+            
+            <!-- volume tab end -->
+          </div>
           <div id="test5" class="col s12">
                  <div class="row">
                   <div class="col s12">
@@ -209,7 +356,7 @@
                     </div>                    
                   
                    </div>
-                  <div class="col s5">
+                  <div class="col s8">
                       <div class="row">
                        <div class="input-field col s12">
                         <textarea   class="materialize-textarea" id="txtJSON">                         
@@ -227,17 +374,21 @@
                       </div>
                       </div>
                   </div>
-                  <div class="col s2">
-                       <button class="btn waves-effect waves-light" id="txtEval" type="submit" name="action">Evaluate
-                         <i class="material-icons right">send</i>
-                      </button>
-                   </div>
-                  <div class="col s5">
+                
+                   
+                  <div class="col s4">
                     <div class="row">
                        <div class="input-field col s12">
                         <input placeholder="Enter input value here" id="txtInput" type="text" class="validate">
                         <label for="first_name">Input</label>
                       </div>
+                      
+                       <div class="input-field col s12">
+                         <button class="btn waves-effect waves-light" id="txtEval" type="submit" name="action">Evaluate
+                           <i class="material-icons right">send</i>
+                        </button>
+                      </div>
+                      
                       </div>                   
                    </div>
                    
@@ -253,6 +404,7 @@
                    </div>
                    
                 </div>
+                <!-- textinput tab end -->
            </div>
         </div>    
 
@@ -270,16 +422,41 @@
           $('ul.tabs').tabs();
           $('select').not('.disabled').material_select();
 		   
+	
+		  $("#mcEval").click(function(){
+		  
+		      var jsontext = $("#mcJSON").val();
+           var metadata = JSON.parse( jsontext );
+		  
+			  var selVal = $.trim( $("#mcSel").val() );
+			  
+			  var rslt = evalExpressionObj( metadata, selVal.length > 0 ? {input:selVal} : null);  
+			  console.log(rslt);
+			  $("#mc_rslt").html(rslt);
+		  });
+		   
+		  $("#volEval").click(function() {
+		       var jsontext = $("#volJSON").val();
+           var metadata = JSON.parse( jsontext );
+		  
+			  var selVal = $.trim( $("#txtInputVol").val() );
+			  
+			  var rslt = evalExpressionObj( metadata, selVal.length > 0 ? {input:selVal} : null);  
+			  console.log(rslt);
+			  $("#rsltVol").html(rslt);
+		  });
+		   
+		   
 		  $("#ynEval").click(function(){
 		  
 		      var jsontext = $("#ynJSON").val();
-              var metadata = JSON.parse( jsontext );
-			  console.log(metadata);
-		  
-			  var selVal = $("#ynSel").val();
-			  console.log(selVal);
+           var metadata = JSON.parse( jsontext );
+			 
 			  
-			  var rslt = evalExpressionObj( metadata, {input:selVal})  
+			    var selVal = $.trim( $("#ynSel").val() );
+			  
+			  var rslt = evalExpressionObj( metadata, selVal.length > 0 ? {input:selVal} : null);  
+			 
 			  console.log(rslt);
 			  $("#rslt1").html(rslt);
 		  });
