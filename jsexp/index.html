@@ -416,14 +416,22 @@
                           <textarea   class="materialize-textarea" id="expJSON">             
 
 {	"func":"evaluate",
-	"params":["value1","value2","value3"],
+	"params":["place","location","building","name"],
 	"config":[
 		 {
 		   "type":"and",
   			"exp":[
-  				{"left":"value1", "right":"yes", "operator":"=="},
-  				{"left":"value2", "right":"yes", "operator":"=="},
-  				{"left":"value3", "right":"yes", "operator":"!="}
+  				{"left":"place", "right":"tvm", "operator":"=="},
+  				{"left":"location", "right":"technopark", "operator":"=="},
+  				{"left":"building", "right":"nila", "operator":"=="},
+                {
+				   "type":"or",
+					"exp":[
+						{"left":"name", "right":"ust", "operator":"=="},
+						{"left":"name", "right":"ustglobal", "operator":"=="},
+						{"left":"name", "right":"ustechnologies", "operator":"=="}						
+					]
+				 }
   			]
 		 }
 	]
@@ -443,10 +451,11 @@
                                               <div class="input-field col s12">
                         <textarea   class="materialize-textarea" id="cJSONInput">                         
 {
-  "value1":"yes", 
-  "value2":"yes",
-  "value3":"no"
-}                        
+  "place":"tvm", 
+  "location":"technopark",
+  "building":"nila",
+ "name":"ust"
+}                          
                          </textarea>
                         <label for="textarea1">JSON Input</label>
                       </div>
