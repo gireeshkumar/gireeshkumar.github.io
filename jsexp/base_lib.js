@@ -49,7 +49,7 @@ function evalExpressionObj(expObj,params){
     var paramkeys = expObj.params;
     var config = expObj.config;
    
-    var arr = [config];
+    var arr = [];
     if(typeof params != "undefined" && params != null){
         for(var i = 0; i < paramkeys.length; i++){
             var property = paramkeys[i];
@@ -61,9 +61,9 @@ function evalExpressionObj(expObj,params){
         }
     }
     if(fnc === "evaluate"){
-         return EvelLib.evaluate(config, paramkeys, arr.splice(1, arr.length));
+         return EvelLib.evaluate(config, paramkeys, arr);
     }else{
-         return ( EvelLib[fnc]).apply (null, arr);   
+         return ( EvelLib[fnc]).apply (null, [config, arr]);   
     }
    
     
