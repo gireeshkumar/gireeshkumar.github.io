@@ -80,10 +80,10 @@ EvelLib = {
         return exp;
     },
     genNumber : function(cnf, input){       
-        return new Function('input', EvelLib.genExpImpl(cnf) )(input);
+        return new Function('input', EvelLib.genExpImpl(cnf) ).apply(null,input);
     },
     genNumberND : function(cnf, input){     
-        return new Function('rate','num','denom',EvelLib.genExpImpl(cnf) )(input);
+        return new Function('rate','num','denom',EvelLib.genExpImpl(cnf) ).apply(null,input);
     },
     evaluate: function(cnf, params, input){
         console.log(cnf);console.log(params);console.log(input);
