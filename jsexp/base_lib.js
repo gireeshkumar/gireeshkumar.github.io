@@ -1,6 +1,15 @@
 function toExp(e){
 	var n=" ";
-	return n+=e.left+" "+e.operator+" "+(typeof e.right === "string" ? ('"'+e.right+'"') : e.right);
+	var isvar = false;
+	var varname = null;
+	if(typeof e.right === "string"){
+		if((e.right.startsWith("${{") && e.right.endsWith("}}"))){
+			//right value is a variable
+			isvar = true;
+			varname = e.right.substring(3, e.right.length-2);
+		}
+	}
+	return n+=e.left+" "+e.operator+" "+ (isvar ? varname : (typeof e.right === "string" ? ('"'+e.right+'"') : e.right));
 }
 function isNested(expobj){
     return "undefined" !=typeof expobj.type && "undefined"!=typeof expobj.exp;
