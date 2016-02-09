@@ -89,7 +89,8 @@ EvelLib = {
         return exp;
     },
     genNumber : function(cnf, input){       
-        return new Function('input', EvelLib.genExpImpl(cnf) ).apply(null,input);
+        var rslt = new Function('input', EvelLib.genExpImpl(cnf) ).apply(null,input);
+    	return (null == rslt || "undefined" == typeof rslt) ? 0 : rslt;
     },
     genNumberND : function(cnf, input){     
         var rslt = new Function('rate','num','denom','input',EvelLib.genExpImpl(cnf) ).apply(null,input);
