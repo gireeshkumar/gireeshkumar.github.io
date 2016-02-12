@@ -40,7 +40,7 @@ function generateJS(e){
     if(e.rslt === null || typeof e.rslt === "undefined"){
         return genJS(e);
     }else{
-        return"if("+genJS(e)+") {return "+e.rslt+";}"
+        return"if("+genJS(e)+") {return '"+e.rslt+"';}"
     }
 	
 }
