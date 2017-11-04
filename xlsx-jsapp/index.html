@@ -92,7 +92,7 @@
                                 <a class="nav-link Services tablink" id="srvhref" href="#" onclick="loadSheet('Services')" style="display:none">Services</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link Software tablink" id="softhref" href="#" onclick="loadSheet('Software')" style="display:none">Software</a>
+                                <a class="nav-link Softwares tablink" id="softhref" href="#" onclick="loadSheet('Softwares')" style="display:none">Softwares</a>
                             </li>
                         </ul>
                     </div>
@@ -130,19 +130,7 @@
         let devicelistTpl = _.template($('#devicelistopt').html());
 
         //////////////////////////////////////////////////////////////
-        
         var noteindex = 0, urlindex = 0;
-        
-        function updateArrayIndexBySheet(sheetname){
-            if (sheetname === "Services" ){
-                noteindex = 7;
-                urlindex =  8;
-            }else{
-                noteindex = 5;
-                urlindex = 6;
-            }
-        }
-        
 
         var X = XLSX;
 
@@ -176,10 +164,10 @@
 
                 deviceData['Services'] = data;
 
-                ws = workbook.Sheets['Software'];
+                ws = workbook.Sheets['Softwares'];
                 data = XLSX.utils.sheet_to_json(ws, { header: 1 });
 
-                deviceData['Software'] = data;
+                deviceData['Softwares'] = data;
 
                 $("#srvhref, #softhref").show();
 
@@ -237,13 +225,13 @@
         function saveSheetData(devicename, services, softwares) {
 
             saveListData(devicename, 'Services', services);
-            saveListData(devicename, 'Software', softwares);
+            saveListData(devicename, 'Softwares', softwares);
 
         }
 
         function saveSheet() {
 
-            saveSheetData(devicename, deviceData['Services'], deviceData['Software']);
+            saveSheetData(devicename, deviceData['Services'], deviceData['Softwares']);
 
             // update device list - device_listDoc
             if (device_listDoc.items === undefined || device_listDoc.items === null || device_listDoc.items.length === 0) {
@@ -386,7 +374,7 @@
         }
 
         function loadDataByDevice(name) {
-            // deviceData['Services'], deviceData['Software']
+            // deviceData['Services'], deviceData['Softwares']
             devicename = name;
 
             db.get(devicename + "_Services").then(function(doc) {
@@ -402,10 +390,10 @@
 
 
             //////////
-            db.get(devicename + "_Software").then(function(doc) {
+            db.get(devicename + "_Softwares").then(function(doc) {
 
-                deviceData['Software'] = doc.data;
-                console.log("Software list loaded - " + devicename);
+                deviceData['Softwares'] = doc.data;
+                console.log("Softwares list loaded - " + devicename);
                 $("#softhref").show();
 
             }).catch(function(err) {
@@ -420,9 +408,12 @@
             $(".tablink").removeClass("active");
             $("." + sheetname).addClass("active");
             
-            updateArrayIndexBySheet(sheetname);
 
             data = deviceData[sheetname];
+
+            // find index of "Notes" and "URL"
+            noteindex = _.findIndex(data[0], function(o) { return o.toLowerCase() == 'notes'; });
+            urlindex = _.findIndex(data[0], function(o) { return o.toLowerCase() == 'url'; });
 
             console.log(data);
             currentData = data;
@@ -646,10 +637,10 @@
                 console.log(err);
             });
 
-            db.get("Software_ALL").then(function(doc) {
-                allrecords['Software'] = doc;
+            db.get("Softwares_ALL").then(function(doc) {
+                allrecords['Softwares'] = doc;
 
-                console.log("ALL Software record loaded");
+                console.log("ALL Softwares record loaded");
                 console.log(doc);
 
             }).catch(function(err) {
