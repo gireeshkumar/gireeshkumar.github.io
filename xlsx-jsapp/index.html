@@ -1,0 +1,678 @@
+<!doctype html>
+<html>
+
+<head>
+
+    <style type="text/css">
+        #drop {
+            border: 2px dashed #bbb;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+            padding: 25px;
+            text-align: center;
+            font: 20pt bold, "Vollkorn";
+            color: #bbb
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/handsontable/0.34.5/handsontable.full.min.css">
+
+
+
+    <script src="lodash.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handsontable/0.34.5/handsontable.full.min.js"></script>
+
+    <script src="https://unpkg.com/canvas-datagrid/dist/canvas-datagrid.js"></script>
+    <script type="text/javascript" src="https://rawgit.com/eligrey/Blob.js/master/Blob.js"></script>
+    <script type="text/javascript" src="https://rawgit.com/eligrey/FileSaver.js/master/FileSaver.js"></script>
+    <script src="xlsx.full.min.js"></script>
+
+    <script src="//cdn.jsdelivr.net/npm/pouchdb@6.3.4/dist/pouchdb.min.js"></script>
+
+</head>
+
+<body>
+
+    <script type="text/html" id="devicelistopt">
+        <option value="-1">Select Device</option>
+        <% _.forEach(devices, function(device) { %>
+            <option value="<%- device %>">
+                <%- device %>
+            </option>
+            <% }); %>
+    </script>
+
+    <div class="container">
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#home" role="tab">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#ignoredlist" role="tab">Ignored List</a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="tab-pane active" id="home" role="tabpanel">
+
+                <div id="drop">Drop a spreadsheet file here to see sheet data</div>
+
+
+                <div class="row">
+                    <div class="col">
+                        <input type="file" name="xlfile" id="xlf" />
+                    </div>
+                    <div class="col">
+                        <form class="form-inline">
+                            <label class="mr-sm-2" for="inlineFormCustomSelect">Device List</label>
+                            <select class="custom-select mb-2 mr-sm-2 mb-sm-0" id="inlineFormCustomSelect">
+                                
+                             </select>
+                        </form>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-success" onclick="saveSheet()">Save Sheet</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item">
+                                <a class="nav-link Services tablink" id="srvhref" href="#" onclick="loadSheet('Services')" style="display:none">Services</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link Software tablink" id="softhref" href="#" onclick="loadSheet('Software')" style="display:none">Software</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <div id="htable"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane" id="ignoredlist" role="tabpanel">
+                <button type="button" class="btn btn-success" onclick="saveIgnoredList()">Save List</button>
+                <div id="iglistTable"></div>
+            </div>
+        </div>
+
+
+    </div>
+
+
+    <script type="text/javascript">
+        $("#inlineFormCustomSelect").change(function() {
+
+            $(".tablink").hide();
+            $(".tablink").removeClass('active');
+            var container = document.getElementById('htable');
+
+            new Handsontable(container).destroy();
+
+            loadDataByDevice($(this).val())
+        });
+
+
+        let devicelistTpl = _.template($('#devicelistopt').html());
+
+        //////////////////////////////////////////////////////////////
+        
+        var noteindex = 0, urlindex = 0;
+        
+        function updateArrayIndexBySheet(sheetname){
+            if (sheetname === "Services" ){
+                noteindex = 7;
+                urlindex =  8;
+            }else{
+                noteindex = 5;
+                urlindex = 6;
+            }
+        }
+        
+
+        var X = XLSX;
+
+        var cDg;
+
+        var software_ignore_list;
+
+        var workbook;
+        var currentData;
+        var currentSheet;
+        var devicename = "nodevice";
+        var allrecords = [];
+
+        var device_listDoc;
+
+        var ignoreList = null;
+
+        var deviceData = [];
+
+        var process_wb = (function() {
+            var XPORT = document.getElementById('xport');
+            var HTMLOUT = document.getElementById('htmlout');
+
+            return function process_wb(wb) {
+                /* get data */
+
+                workbook = wb;
+
+                var ws = workbook.Sheets['Services'];
+                var data = XLSX.utils.sheet_to_json(ws, { header: 1 });
+
+                deviceData['Services'] = data;
+
+                ws = workbook.Sheets['Software'];
+                data = XLSX.utils.sheet_to_json(ws, { header: 1 });
+
+                deviceData['Software'] = data;
+
+                $("#srvhref, #softhref").show();
+
+                // /* update canvas-datagrid */
+                // if(!cDg) cDg = canvasDatagrid({ parentNode:HTMLOUT, data:data });
+                // cDg.data = data;
+                // XPORT.disabled = false;
+
+                // /* create schema (for A,B,C column headings) */
+                // var range = XLSX.utils.decode_range(ws['!ref']);
+                // for(var i = range.s.c; i <= range.e.c; ++i) cDg.schema[i - range.s.c].title = XLSX.utils.encode_col(i);
+
+                // if(typeof console !== 'undefined') console.log("output", new Date());
+            };
+        })();
+
+
+        function saveIgnoredList() {
+            software_ignore_list.items = ignoreList;
+
+            db.put(software_ignore_list).then(function(response) {
+                console.log("Ignore list updated");
+
+                if (currentSheet !== null && currentSheet !== undefined) {
+                    loadSheet(currentSheet);
+                }
+
+            }).catch(function(err) {
+                console.log(err);
+            });
+        }
+
+        function saveListData(devicename, sheetname, data) {
+
+            var key = devicename + "_" + sheetname;
+
+            db.get(key).then(function(doc) {
+
+                doc.data = data;
+                db.put(doc);
+
+            }).catch(function(err) {
+
+                var doc = {
+                    "_id": key,
+                    devicename: devicename,
+                    type: sheetname,
+                    data: data
+                };
+
+                db.put(doc);
+            });
+        }
+
+        function saveSheetData(devicename, services, softwares) {
+
+            saveListData(devicename, 'Services', services);
+            saveListData(devicename, 'Software', softwares);
+
+        }
+
+        function saveSheet() {
+
+            saveSheetData(devicename, deviceData['Services'], deviceData['Software']);
+
+            // update device list - device_listDoc
+            if (device_listDoc.items === undefined || device_listDoc.items === null || device_listDoc.items.length === 0) {
+                device_listDoc.items = [];
+            }
+
+            if (device_listDoc.items.indexOf(devicename) === -1) {
+                device_listDoc.items.push(devicename)
+
+                // update device list to DB
+                db.put(device_listDoc);
+            }
+
+
+
+            software_ignore_list.items = ignoreList;
+
+            db.put(software_ignore_list).then(function(response) {
+                console.log("Ignore list updated");
+            }).catch(function(err) {
+                console.log(err);
+            });
+
+
+            // items with proper data  [5] & [6]
+            var validitems = [];
+
+
+            var existingR = allrecords[currentSheet];
+            if (existingR === null || existingR === undefined) {
+                existingR = {
+                    "_id": currentSheet + "_ALL",
+                    items: []
+                };
+            }
+            else {
+                validitems = existingR.items;
+            }
+
+
+
+            for (var i = 1; i < currentData.length; i++) {
+                var rowd = currentData[i];
+                if (rowd !== null && rowd !== undefined && rowd.length > 0) {
+                    var note = rowd[ noteindex ];
+                    var url = rowd[ urlindex ];
+
+                    if ((note !== null && note !== undefined) || (url !== null && url !== undefined)) {
+
+
+                        // if doesnt exist in the list add to master list
+
+                        var idx = _.findIndex(validitems, function(o) { return _.isEqual(o[0], rowd[1]) });
+
+                        if (idx !== -1) {
+                            console.log("Found same item from master list. Ignore - " + rowd[1]);
+                            console.log(validitems[idx]);
+
+                            validitems[idx][3] = note;
+                            validitems[idx][4] = url;
+                        }
+                        else {
+
+                            var datarow = [];
+                            datarow.push(rowd[1]);
+                            datarow.push(rowd[2]);
+                            datarow.push(rowd[3]);
+                            datarow.push(note);
+                            datarow.push(url);
+
+                            validitems.push(datarow);
+                        }
+
+
+                    }
+                }
+            }
+
+            console.log("Valid items");
+            console.log(validitems);
+
+
+            existingR.items = validitems;
+            db.put(existingR);
+
+        }
+
+        function loadIgnoredListTable() {
+            var container = document.getElementById('iglistTable');
+
+            new Handsontable(container).destroy();
+
+            var data = [];
+            for (var i = 0; i < ignoreList.length; i++) {
+                data.push([ignoreList[i]])
+            }
+
+
+            hot = new Handsontable(container, {
+                data: data,
+                rowHeaders: true,
+                colHeaders: true,
+                manualRowResize: true,
+                manualColumnResize: true,
+                manualRowMove: true,
+                manualColumnMove: true,
+                contextMenu: true,
+                filters: true,
+                dropdownMenu: true,
+                colWidths: [600],
+                colHeaders: [
+                    "Item Name"
+                ]
+            });
+
+
+
+            hot.updateSettings({
+                contextMenu: {
+                    callback: function(key, options) {
+
+                        if (key === 'ignore') {
+                            setTimeout(function() {
+
+                                for (var i = options.start.row; i < options.end.row + 1; i++) {
+                                    rowdata = hot.getDataAtRow(i)[0];
+                                    console.log(rowdata);
+                                    ignoreList.splice(ignoreList.indexOf(rowdata), 1);
+                                }
+                                hot.alter('remove_row', options.start.row, (options.end.row - options.start.row) + 1);
+
+                            }, 100);
+                        }
+                    },
+                    items: {
+                        "ignore": { name: 'Remove Item' }
+                    }
+                }
+            });
+        }
+
+        function loadDataByDevice(name) {
+            // deviceData['Services'], deviceData['Software']
+            devicename = name;
+
+            db.get(devicename + "_Services").then(function(doc) {
+
+                deviceData['Services'] = doc.data;
+
+                console.log("Service list loaded - " + devicename);
+                $("#srvhref").show();
+
+            }).catch(function(err) {
+                console.log(err);
+            });
+
+
+            //////////
+            db.get(devicename + "_Software").then(function(doc) {
+
+                deviceData['Software'] = doc.data;
+                console.log("Software list loaded - " + devicename);
+                $("#softhref").show();
+
+            }).catch(function(err) {
+                console.log(err);
+            });
+
+
+        }
+
+        function loadSheet(sheetname) {
+
+            $(".tablink").removeClass("active");
+            $("." + sheetname).addClass("active");
+            
+            updateArrayIndexBySheet(sheetname);
+
+            data = deviceData[sheetname];
+
+            console.log(data);
+            currentData = data;
+            currentSheet = sheetname;
+
+            // by device name
+            devicename = null;
+
+            var validitems = [];
+
+
+            var existingR = allrecords[currentSheet];
+            if (existingR !== null && existingR !== undefined) {
+                validitems = existingR.items;
+            }
+            var validitemsClone = _.cloneDeep(validitems);
+
+
+
+            // filter list
+
+            var temp = [];
+            temp.push(data[0]);
+            for (var i = 1; i < data.length; i++) {
+                var rowd = data[i];
+
+                // ignore ?
+                if (ignoreList != null && rowd.length > 0) {
+                    if (ignoreList.indexOf(rowd[1]) != -1) {
+                        console.log("IGNORED : " + rowd[1]);
+                        continue;
+                    }
+                }
+
+                if (validitemsClone.length > 0) {
+                    var idx = _.findIndex(validitemsClone, function(o) { return _.isEqual(o[0], rowd[1]) });
+                    var existingItem = validitemsClone[idx];
+                    if (idx !== -1) {
+                        rowd[ noteindex ] = existingItem[3];
+                        rowd[ urlindex ] = existingItem[4];
+
+                        validitemsClone.splice(idx, 1);
+                    }
+                }
+
+                // if not filtered,  add
+                temp.push(rowd);
+
+            }
+
+            data = temp;
+
+            devicename = data[1][0];
+            console.log("devicename:" + devicename);
+
+            // for(var i = 1; i < data.length; i++){
+            //   if(devicename == null){
+            //     devicename = data[i][0];
+            //   }
+            //   // TODO,  Now I am expecting only one device name per file
+            //   break;
+            // }
+
+            // data.splice(0, 1);
+
+            var container = document.getElementById('htable');
+
+            new Handsontable(container).destroy();
+
+            hot = new Handsontable(container, {
+                data: data,
+                rowHeaders: true,
+                colHeaders: true,
+                manualRowResize: true,
+                manualColumnResize: true,
+                manualRowMove: true,
+                manualColumnMove: true,
+                contextMenu: true,
+                filters: true,
+                dropdownMenu: true,
+                colWidths: [200, 200, 200, 60, 80, 80, 80, 80, 80, 80, 80, 80],
+                colHeaders: data[0]
+            });
+
+/*
+ colHeaders: [
+                    "device_name",
+                    "displayname",
+                    "service_name",
+                    "appcomp",
+                    "user_name",
+                    "startmode",
+                    "state",
+                    "Vendor App",
+                    "Area",
+                    "CCS Application (if applicable?)",
+                    "Notes",
+                    "URL"
+                ]
+                */
+
+
+            hot.updateSettings({
+                contextMenu: {
+                    callback: function(key, options) {
+                        console.log("menu");
+                        console.log(key);
+                        console.log(options);
+
+                        console.log("==> " + options.start.row + " -To- " + options.end.row);
+                        var sel = hot.getSelected();
+
+
+                        if (key === 'ignore') {
+                            setTimeout(function() {
+
+                                //	hot.alter('remove_row', sel[0], 1);
+
+                                for (var i = options.start.row; i < options.end.row + 1; i++) {
+                                    rowdata = hot.getDataAtRow(i);
+                                    console.log(rowdata);
+                                    if (ignoreList == null) {
+                                        ignoreList = [];
+                                    }
+
+                                    ignoreList.push(rowdata[1]);
+                                }
+
+                                hot.alter('remove_row', options.start.row, (options.end.row - options.start.row) + 1);
+
+                                console.log("ignoreList:" + ignoreList);
+
+                            }, 100);
+                        }
+                    },
+                    items: {
+                        "ignore": { name: 'Add to ignore list' }
+                    }
+                }
+            });
+
+        }
+
+
+
+        var do_file = (function() {
+
+            var rABS = typeof FileReader !== "undefined" && (FileReader.prototype || {}).readAsBinaryString;
+
+            //if(!rABS) domrabs.disabled = !(domrabs.checked = false);
+
+            return function do_file(files) {
+
+                //	rABS = domrabs.checked;
+                var f = files[0];
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    if (typeof console !== 'undefined') console.log("onload", new Date(), rABS);
+                    var data = e.target.result;
+                    if (!rABS) data = new Uint8Array(data);
+                    process_wb(X.read(data, { type: rABS ? 'binary' : 'array' }));
+                };
+                if (rABS) reader.readAsBinaryString(f);
+                else reader.readAsArrayBuffer(f);
+            };
+        })();
+
+
+
+        (function() {
+            var drop = document.getElementById('drop');
+            if (!drop.addEventListener) return;
+
+            function handleDrop(e) {
+                e.stopPropagation();
+                e.preventDefault();
+                do_file(e.dataTransfer.files);
+            }
+
+            function handleDragover(e) {
+                e.stopPropagation();
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'copy';
+            }
+
+            drop.addEventListener('dragenter', handleDragover, false);
+            drop.addEventListener('dragover', handleDragover, false);
+            drop.addEventListener('drop', handleDrop, false);
+        })();
+
+
+        (function() {
+            var xlf = document.getElementById('xlf');
+            if (!xlf.addEventListener) return;
+
+            function handleFile(e) { do_file(e.target.files); }
+            xlf.addEventListener('change', handleFile, false);
+        })();
+    </script>
+
+    <script type="text/javascript">
+        var db = new PouchDB('https://partemadmincerevingirema:606f8e7ab334da9cb586af26c88224ea292fbf50@a69e385a-9d41-45b2-a8a0-d810fe8f1da8-bluemix.cloudant.com/xlsx');
+
+        db.info().then(function(info) {
+            console.log(info);
+
+
+            db.get('software-ignore-list').then(function(doc) {
+                software_ignore_list = doc;
+                ignoreList = software_ignore_list.items;
+                loadIgnoredListTable();
+            }).catch(function(err) {
+                console.log(err);
+            });
+
+            db.get("Services_ALL").then(function(doc) {
+                allrecords['Services'] = doc;
+                console.log("ALL services record loaded");
+                console.log(doc);
+            }).catch(function(err) {
+                console.log(err);
+            });
+
+            db.get("Software_ALL").then(function(doc) {
+                allrecords['Software'] = doc;
+
+                console.log("ALL Software record loaded");
+                console.log(doc);
+
+            }).catch(function(err) {
+                console.log(err);
+            });
+
+            //device_listDoc
+            db.get("device_list").then(function(doc) {
+                device_listDoc = doc;
+
+                console.log("Devicelist loaded");
+                console.log(doc);
+
+
+                $('#inlineFormCustomSelect').html(devicelistTpl({ 'devices': device_listDoc.items }));
+
+            }).catch(function(err) {
+                console.log(err);
+            });
+
+        })
+    </script>
+
+</body>
+
+</html>
